@@ -4,13 +4,12 @@ interface StartScreenProps {
     onStartClick: () => void;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ onStartClick }) => {
+const StartScreen: React.FC<StartScreenProps> = ({onStartClick}) => {
     return (
-        <div>
+        <div className="start-screen">
             <h1>Welcome to the game: "The fastest in Unibrix!"</h1>
-            <button className='button-start' onClick={onStartClick}>Start</button>
+            <button className='start-screen__button-start' onClick={onStartClick}>Start</button>
         </div>
     );
 };
-
 export default StartScreen;
