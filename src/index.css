@@ -1,10 +1,10 @@
 body {
-    background-image: url(images/last.jpeg);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(25,44,36,1) 0%, rgba(14,20,18,1) 100%, rgba(34,34,34,1) 100%);
 }
 
 h1 {
-    color: crimson;
-    font-size: 40px;
+    color: White;
+    font-size: 4vh;
     text-align: center;
 }
 
@@ -14,86 +14,140 @@ p {
 
 .box-start {
     text-align: center;
+}
 
-    margin-top: 300px;
+.start-screen {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main-screen {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.start-screen__button-start {
+    width: fit-content;
+    min-width: 20vw;
+    height: 10vh;
+    font-size: 7vh;
+    border-radius: 7px;
+    border: 1px solid white;
+    color: white;
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(32,111,80,1) 0%, rgba(13,32,25,1) 100%, rgba(34,34,34,1) 100%);
+}
+
+.start-screen__button-start:hover {
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(28,69,53,1) 0%, rgba(13,32,25,1) 100%, rgba(34,34,34,1) 100%);
+    cursor: pointer;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.main-form {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .input-waiting {
-    margin-right: 20px;
-
-    width: 200px;
-    height: 40px;
-
+    width: fit-content;
+    height: 5vh;
     color: white;
-    background: linear-gradient(darkblue, darkred);
-    font-size: 20px;
-    border: none;
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(23,89,63,1) 0%, rgba(13,31,24,1) 100%, rgba(34,34,34,1) 100%);    font-size: 20px;
+    border: 1px solid white;
+    text-align: center;
     border-radius: 10px;
 }
 
 .button-submit {
-    width: 200px;
-    height: 40px;
-
-    font-size: 20px;
+    width: fit-content;
+    min-width: 20vw;
+    height: 6vh;
+    font-size: 5vh;
     color: white;
     background: linear-gradient(darkblue, darkred);
     border: none;
     border-radius: 10px;
 }
 
-li {
+.main-screen__title {
+    color: white;
+}
+
+.game-screen__special-label {
+    color: rgba(140,251,62,0.74);
+}
+
+.online-list__user {
     color: white;
 }
 
 .button-submit:hover {
     cursor: pointer;
-
-    border: 2px solid white;
+    border: 1px solid white;
 }
 
 .input-waiting::placeholder {
-    font-size: 20px;
     color: white;
 }
 
 .input-waiting:hover {
-    border: 2px solid white;
+    border: 1px solid white;
 }
 
 .button-start {
     position: relative;
-
-    width: 200px;
-    height: 50px;
-
-    font-size: 20px;
+    width: fit-content;
+    height: 6vh;
+    font-size: 3vh;
     color: white;
-    background: linear-gradient(darkblue, darkred);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(136,136,136,1) 0%, rgba(73,73,73,1) 100%, rgba(62,62,62,1) 100%);
     border: none;
     border-radius: 10px;
 }
 
+.letter-array {
+    display: none;
+}
+
 .button-start:hover {
     cursor: pointer;
-    border: 2px solid white;
+    border: 1px solid white;
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(107,107,107,1) 0%, rgba(43,43,43,1) 100%, rgba(15,15,15,1) 100%);
 }
 
 .board {
-    margin: 0 auto;
-
-    width: 200px;
-    height: 200px;
-
-    background-color: chocolate;
-    border-radius: 5px;
-    border: 1px solid black;
-
-    text-align: center;
-    font-size: 180px;
-}
-
-.board:hover {
-    background-color: coral;
+    --b: 5px;
+    --c: #0000 25%,rgba(140,251,62,0.74) 0;
+    padding: 10px;
+    background:
+            conic-gradient(from 90deg  at top    var(--b) left  var(--b),var(--c)) 0    0,
+            conic-gradient(from 180deg at top    var(--b) right var(--b),var(--c)) 100% 0,
+            conic-gradient(from 0deg   at bottom var(--b) left  var(--b),var(--c)) 0    100%,
+            conic-gradient(from -90deg at bottom var(--b) right var(--b),var(--c)) 100% 100%;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
     cursor: pointer;
+    margin: 0 auto;
+    width: 20vh;
+    height: 20vh;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 17vh;
+    color: white;
+    user-select: none;
 }

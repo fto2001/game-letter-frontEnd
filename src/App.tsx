@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import io from 'socket.io-client';
 import StartScreen from './start-screen';
 import WaitingRoom from './waiting-room';
 import GameScreen from './game-screen';
 import './index.css'
 
-const socket = io('http://192.168.11.145:7000');
+const socket = io('http://192.168.10.10:7000');
 
 enum Events {
     RANDOM_LETTER = 'randomLetter',
@@ -17,7 +17,7 @@ enum Events {
     JOIN_ROOM = 'joinRoom',
     CREATE_ROOM = 'createRoom',
     ROOM_NOT_FOUND = 'roomNotFound',
-    LETTER_UPDATE = 'letterUpdate'
+    LETTER_UPDATE = 'letterUpdate',
 }
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
             setCurrentLetter(data.letter);
         });
 
-        socket.on(Events.SCORE_UPDATE, ({ playerId, score }) => {
+        socket.on(Events.SCORE_UPDATE, ({playerId, score}) => {
             if (playerId === socket.id) {
                 setScore(score);
                 socket.emit(Events.OPPONENT_UPDATE)
@@ -49,11 +49,7 @@ const App = () => {
             alert('Room not found. Please try again.');
         });
 
-        socket.on(Events.LETTER_UPDATE, ({ letter }) => {
-            setCurrentLetter(letter);
-        });
-
-        socket.on(Events.SET_NICKNAME, ({ playerId, nickName, roomId, winningScore }) => {
+        socket.on(Events.SET_NICKNAME, ({playerId, nickName, roomId, winningScore}) => {
             if (playerId === socket.id) {
                 setNickName(nickName);
                 setRoomId(roomId);
@@ -63,7 +59,7 @@ const App = () => {
             }
         });
 
-        socket.on(Events.CREATE_ROOM, ({ roomId, letterArray }) => {
+        socket.on(Events.CREATE_ROOM, ({roomId, letterArray}) => {
             setRoomId(roomId);
             setCurrentScreen('game');
             setLetterArray(letterArray);
@@ -73,13 +69,14 @@ const App = () => {
             setOpponents(roomPlayers);
         });
 
-        socket.on(Events.WIN, () => {
+        socket.on(Events.WIN, (playerNickname) => {
             setScore(0);
+            alert("Player " + playerNickname + " has won!");
         });
 
-        socket.emit(Events.OPPONENT_UPDATE);
-
-        socket.on(Events.LETTER_UPDATE, ({ letter }) => {
+        //socket.emit(Events.OPPONENT_UPDATE);
+        console.log(1)
+        socket.on(Events.LETTER_UPDATE, ({letter}) => {
             setCurrentLetter(letter);
             console.log("Received Letter:", letter);
         });
@@ -93,9 +90,9 @@ const App = () => {
         });
 
         return () => {
-            for (const valid in Events) {
-                socket.off(valid)
-            }
+            Object.values(Events).forEach(eventName => {
+                socket.off(eventName)
+            })
         }
     }, []);
 
@@ -107,29 +104,29 @@ const App = () => {
         setNickName(nickName);
         setWinningScore(winningScore)
         setCurrentScreen('waitingRoom');
-        socket.emit(Events.CREATE_ROOM, { nickName, winningScore: parseInt(winningScore, 10) });
+        socket.emit(Events.CREATE_ROOM, {nickName, winningScore: parseInt(winningScore)});
     };
 
     const handleWaitingRoomSubmit = (nickName: string, roomId: string) => {
         setNickName(nickName);
         setRoomId(roomId);
         setCurrentScreen('game');
-        socket.emit(Events.JOIN_ROOM, { nickName, roomId, winningScore });
+        socket.emit(Events.JOIN_ROOM, {nickName, roomId, winningScore});
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key.toUpperCase() === currentLetter) {
             socket.emit(Events.INCREMENT_SCORE);
             socket.emit(Events.RANDOM_LETTER);
-
-            socket.emit(Events.LETTER_UPDATE, { letter: letterArray[0] });
+            socket.emit(Events.LETTER_UPDATE, {letter: letterArray[0]});
         }
     };
 
     return (
         <div>
-            {currentScreen === 'start' && <StartScreen onStartClick={handleStartClick} />}
-            {currentScreen === 'waitingRoom' && <WaitingRoom onSubmit={handleWaitingRoomSubmit} onCreateRoomClick={handleCreateRoomClick} />}
+            {currentScreen === 'start' && <StartScreen onStartClick={handleStartClick}/>}
+            {currentScreen === 'waitingRoom' &&
+                <WaitingRoom onSubmit={handleWaitingRoomSubmit} onCreateRoomClick={handleCreateRoomClick}/>}
             {currentScreen === 'game' && (
                 <GameScreen
                     nickName={nickName}
